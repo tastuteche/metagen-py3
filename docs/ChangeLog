@@ -1,0 +1,6 @@
+* metagen-0.4 (04 Jan 2005)
+
+  04 Jan 04 2005; Rob Cakebread <pythonhead@gentoo.org>:
+  Major refactoring. Created separate class metagenerator.py
+  Created rudimentary testing framework.
+

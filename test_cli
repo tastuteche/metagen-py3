@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#Should fail if ECHANGELOG_USER not set:
+echo 'metagen -m -Q'
+./metagen.py -m -Q
+
+echo 'metagen -e "someguy@gentoo.org" -d "Maint desc" -Q'
+./metagen.py -e "someguy@gentoo.org" -d "Maint desc" -Q
+
+echo 'metagen -e "someguy@gentoo.org" -n "Jon Doe" -d "Maint desc" -Q'
+./metagen.py -e "someguy@gentoo.org" -n "Jon Doe" -d "Maint desc" -Q
+
+#Should fail if ECHANGELOG_USER not set:
+echo 'metagen -m -H python -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q'
+./metagen.py -m -H python -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q
+
+#Should fail:
+echo 'metagen -H no-herd -Q'
+./metagen.py -H no-herd -Q
+
+#Should fail:
+echo 'metagen -l "Long desc" -Q'
+./metagen.py -l "Long desc" -Q
+
+#Should fail:
+echo 'metagen -d "Maintainer desc" -Q'
+./metagen.py -d "Maintainer desc" -Q
+

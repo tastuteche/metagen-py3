@@ -1,0 +1,118 @@
+
+metagen is copyright 2004,2005 Rob Cakebread, released under
+the terms of the GNU Public License v2
+
+
+metagen is a command line tool that writes a Gentoo metadata.xml file 
+in the current working directory.
+
+The metagen package also has a metagenerator class that can be used
+from Python to create metadata.xml files easily:
+
+    from metagenerator import MyMetadata
+
+    metadata = MyMetadata()
+    metadata.set_herd(["python"])
+    print metadata 
+
+    metadata = MyMetadata()
+    metadata.set_herd(["gnome", "python"])
+    metadata.set_maintainer(["<pythonhead@gentoo.org>"], 
+                            ["Rob Cakebread"], 
+                            ["Maintainer description."]
+                           )
+    print metadata 
+
+    * All methods use lists of strings as arguments except
+      set_longdescription, which is a string
+
+    * See meta_unittest.py for more detailed examples
+
+    * There isn't much in the way of error checking in metagenerator.py
+      Most of the sanity checking is done in metagen.py
+
+
+
+Command line tool examples:
+
+metagen -H python
+
+ * One herd
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE pkgmetadata SYSTEMhttp://www.gentoo.org/dtd/metadata.dtd">
+    <pkgmetadata>
+            <herd>python</herd>
+    </pkgmetadata>
+
+metagen -m
+
+ * This takes the maintainer info from your ECHANGELOG_USER variable
+   and assigns "no-herd" as the herd.
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE pkgmetadata SYSTEMhttp://www.gentoo.org/dtd/metadata.dtd">
+    <pkgmetadata>
+            <herd>no-herd</herd>
+            <maintainer>
+                    <email>pythonhead@gentoo.org</email>
+                    <name>Rob Cakebread</name>
+            </maintainer>
+    </pkgmetadata>
+
+
+metagen -m -d "I maintain this because I'm crazy."
+
+ * Maintainer with description of maintenance
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE pkgmetadata SYSTEMhttp://www.gentoo.org/dtd/metadata.dtd">
+    <pkgmetadata>
+            <herd>no-herd</herd>
+            <maintainer>
+                    <email>pythonhead@gentoo.org</email>
+                    <name>Rob Cakebread</name>
+                    <description>I maintain this because I'm crazy.</description>
+            </maintainer>
+    </pkgmetadata>
+
+
+metagen -m -H python -l "This package does X, Y, and Z."
+
+ * Maintainer, herd, long description
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE pkgmetadata SYSTEMhttp://www.gentoo.org/dtd/metadata.dtd">
+    <pkgmetadata>
+            <herd>python</herd>
+            <maintainer>
+                    <email>pythonhead@gentoo.org</email>
+                    <name>Rob Cakebread</name>
+            </maintainer>
+            <longdescription>This package does X, Y, and Z.</longdescription>
+    </pkgmetadata>
+
+metagen -m -e "jdoe@gentoo.org","tsmith@gentoo.org" -n "Jane Doe","Tom Smith" -H python,gnome -l "This package does X, Y, and Z."
+
+ * Two herds, 3 maintainers, long description
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE pkgmetadata SYSTEMhttp://www.gentoo.org/dtd/metadata.dtd">
+    <pkgmetadata>
+            <herd>python</herd>
+            <herd>gnome</herd>
+            <maintainer>
+                    <email>pythonhead@gentoo.org</email>
+                    <name>Rob Cakebread</name>
+            </maintainer>
+            <maintainer>
+                    <email>jdoe@gentoo.org</email>
+                    <name>Jane Doe</name>
+            </maintainer>
+            <maintainer>
+                    <email>tsmith@gentoo.org</email>
+                    <name>Tom Smith</name>
+            </maintainer>
+            <longdescription>This package does X, Y, and Z.</longdescription>
+    </pkgmetadata>
+
