@@ -13,8 +13,8 @@ class MyMetadata(jaxml.XML_document):
     def __init__(self):
         jaxml.XML_document.__init__(self, "1.0", "UTF-8")
         self._indentstring("\t")
-        self._text('<!DOCTYPE pkgmetadata SYSTEM' +
-                   'http://www.gentoo.org/dtd/metadata.dtd">')
+        self._text('<!DOCTYPE pkgmetadata SYSTEM ' +
+                   '"http://www.gentoo.org/dtd/metadata.dtd">')
         self.pkgmetadata()
 
     def set_herd(self, opt_herds=["no-herd"]):
@@ -47,7 +47,7 @@ class MyMetadata(jaxml.XML_document):
         """Set package's long description."""
         self.longdescription(longdesc)
 
-if __name__ == "__main__":
+def do_tests():
     import meta_unittest
     fails = 0
     for func in dir(meta_unittest):
@@ -61,3 +61,6 @@ if __name__ == "__main__":
                 print "Test %s failed:" % func
                 print sys.exc_type, sys.exc_value
     print "%s tests failed." % fails
+
+if __name__ == "__main__":
+    do_tests()
