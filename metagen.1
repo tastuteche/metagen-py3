@@ -1,0 +1,66 @@
+.\" Contact pythonhead@gentoo.org to correct errors or omissions. 
+.TH man 1 "22 August 2004" "1.0" "metagen man page"
+.SH NAME
+metagen \- generate metadata.xml for ebuilds
+.SH SYNOPSIS
+metagen [-H herd] [-e email] [-d desc] [-l long desc] ...
+.SH DESCRIPTION
+metagen will create a valid metadata.xml file in the current directory.
+At a miminumum you must speficy either a herd (-H) or a package
+maintainer's email address (-e).
+.SH OPTIONS
+.\" metagen [OPTIONS]
+  -H  herd
+      Name of herd.
+
+  -e  email-address
+      Package maintainer's email address
+
+  -n  maintainer-name
+      Package maintainer's name (used with -e option)
+
+  -d  description
+      Description of maintainership (used with -e option)
+
+  -l  long-description
+      Long description of package.
+
+  -h, --help  show this help message and exit
+.SH NOTES
+If you need multiple elements, such as two herds, use a comma to
+separate them. See EXAMPLES
+.SH EXAMPLES
+.B metagen -H python
+
+Creates barebones metadata.xml with python as the herd
+
+
+.B metagen -H python,wxwidgets -l "This package does yada yada yada."
+
+Two herds and long description
+
+
+.B metagen -e pythonhead@gentoo.org -n "Joe Blow" -d "The voices in my head told me to maintain this package"
+
+No herd, maintainer email, maintainer name, description of maintainership
+
+
+.B metagen -H net-p2p,python -e jo@gentoo.org,flo@gentoo.org \
+           -n "Jo Blo","Flo Blo" \
+           -d "I'm maintaining this because foo","I'm maintaining this because bar" \
+           -l "This package is yadda yadda yadda, spam and eggs"
+
+2 herds, 2 maintainers with names and maintainer descriptions for each maintainer
+
+.SH FILES
+.P 
+.I /usr/bin/metagen
+.I /usr/share/man/man1/metagen.1.gz
+.SH BUGS
+No known bugs at this time. 
+.SH AUTHOR
+.nf
+Rob "pythonhead" Cakebread (pythonhead@gentoo.org)
+.fi
+.SH HISTORY
+2004 \- Initial revision
