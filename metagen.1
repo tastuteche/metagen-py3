@@ -1,13 +1,18 @@
 .\" Contact pythonhead@gentoo.org to correct errors or omissions. 
 .TH man 1 "22 August 2004" "1.0" "metagen man page"
 .SH NAME
-metagen \- generate metadata.xml for ebuilds
+.B metagen
+\- generate metadata.xml for ebuilds
 .SH SYNOPSIS
-metagen [-H herd] [-e email] [-d desc] [-l long desc] ...
+.B metagen
+[options]
 .SH DESCRIPTION
-metagen will create a valid metadata.xml file in the current directory.
-At a miminumum you must speficy either a herd (-H) or a package
-maintainer's email address (-e).
+.B metagen 
+will create a valid metadata.xml file in the current directory. metadata.xml requires a herd tag (-H). If you only specify a package maintainer's email address (-e) "no-herd" will be inserted in the herd tag automatically.
+
+If you need multiple elements, such as two herds, use a comma to
+separate them. See EXAMPLES.
+
 .SH OPTIONS
 .\" metagen [OPTIONS]
   -H  herd
@@ -19,38 +24,61 @@ maintainer's email address (-e).
   -n  maintainer-name
       Package maintainer's name (used with -e option)
 
+  -m 
+      Uses ECHANGELOG_USER variable. Can be used instead of -e and -n
+
   -d  description
       Description of maintainership (used with -e option)
 
   -l  long-description
       Long description of package.
 
+  -o  output-file
+      Write to <output-file> instead of ./metadata.xml
+
+  -f
+      Force overwrite of existing metadata
+
+  -v 
+      Write to stdout as well as disk (default)
+
+  -q
+      Don't write to stdout
+
+  -Q
+      Don't write file to disk 
+
   -h, --help  show this help message and exit
-.SH NOTES
-If you need multiple elements, such as two herds, use a comma to
-separate them. See EXAMPLES
+
 .SH EXAMPLES
 .B metagen -H python
 
-Creates barebones metadata.xml with python as the herd
+Creates metadata.xml in current directory with python as the herd
 
 
-.B metagen -H python,wxwidgets -l "This package does yada yada yada."
+.B metagen -H python,wxwidgets \
+           -l 'This package does a little of this and some o dat.'
 
-Two herds and long description
+Creates metadata in current directory with two herds and long description
 
 
-.B metagen -e pythonhead@gentoo.org -n "Joe Blow" -d "The voices in my head told me to maintain this package"
+.B metagen -e pythonhead@gentoo.org \
+           -n 'Joe Blow' \
+           -d 'The voices in my head told me to maintain this package' \
+           -Q
 
-No herd, maintainer email, maintainer name, description of maintainership
+herd='no-herd', maintainer email, maintainer name, description of maintainership, to stdout only
 
 
 .B metagen -H net-p2p,python -e jo@gentoo.org,flo@gentoo.org \
-           -n "Jo Blo","Flo Blo" \
-           -d "I'm maintaining this because foo","I'm maintaining this because bar" \
-           -l "This package is yadda yadda yadda, spam and eggs"
+           -n 'Jo Blo','Flo Blo' \
+           -d 'I am maintaining this because foo','I am maintaining this because bar' \
+           -l 'This package is yadda yadda yadda, spam and eggs' \
+           -Q
 
-2 herds, 2 maintainers with names and maintainer descriptions for each maintainer
+2 herds, 2 maintainers with names and maintainer descriptions for each maintainer,
+only write to stdout
+
 
 .SH FILES
 .P 
@@ -60,7 +88,7 @@ No herd, maintainer email, maintainer name, description of maintainership
 No known bugs at this time. 
 .SH AUTHOR
 .nf
-Rob "pythonhead" Cakebread (pythonhead@gentoo.org)
+Rob 'pythonhead' Cakebread (pythonhead@gentoo.org)
 .fi
 .SH HISTORY
 2004 \- Initial revision
