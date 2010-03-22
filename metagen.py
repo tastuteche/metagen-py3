@@ -21,7 +21,7 @@ import os
 from optparse import OptionParser
 from commands import getstatusoutput
 
-from output import red, blue
+from portage.output import red, blue
 
 import metagenerator
 

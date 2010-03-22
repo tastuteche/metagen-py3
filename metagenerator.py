@@ -3,7 +3,7 @@
 import sys
 
 import jaxml
-from output import red
+from portage.output import red
 
 
 class MyMetadata(jaxml.XML_document):
