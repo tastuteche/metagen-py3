@@ -9,7 +9,7 @@ in the current working directory.
 The metagen package also has a metagenerator class that can be used
 from Python to create metadata.xml files easily:
 
-    from metagenerator import MyMetadata
+    from metagen.metagenerator import MyMetadata
 
     metadata = MyMetadata()
     metadata.set_herd(["python"])
