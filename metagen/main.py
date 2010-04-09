@@ -23,6 +23,7 @@ from commands import getstatusoutput
 
 from portage.output import red, blue
 
+from metagen.version import __version__
 import metagen.metagenerator
 
 
@@ -97,7 +98,7 @@ def validate_xml(my_xml):
 
 
 if __name__ == '__main__':
-    optParser = OptionParser()
+    optParser = OptionParser(version=__version__)
     optParser.add_option("-H", action="store", dest="herd", type="string",
                          help="Name of herd. If not specified, " +
                          "'no-herd' will be inserted. " +
