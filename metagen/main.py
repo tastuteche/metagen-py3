@@ -23,7 +23,7 @@ from commands import getstatusoutput
 
 from portage.output import red, blue
 
-import metagenerator
+import metagen.metagenerator
 
 
 def parse_echangelog_variable(name, email):
