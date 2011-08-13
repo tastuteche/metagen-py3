@@ -1,31 +1,31 @@
 #!/usr/bin/python
 
-
 """
 
 NAME     - metagen
-
 SYNOPSIS - Adds metadata.xml to current directory
-
-AUTHOR   - Rob Cakebread <pythonhead@gentoo.org>
-
+AUTHOR   - Rob Cakebread <cakebread@gmail.com>
+AUTHOR   - Jesus Rivero <neurogeek@gentoo.org>
 USE      - metagen --help
-
 EXAMPLES - man metagen
 
 """
 
-import sys
 import re
 import os
+import sys
 from optparse import OptionParser
 from commands import getstatusoutput
 
+from portage import config
+from repoman import herdbase
 from portage.output import red, blue
 
 from metagen.version import __version__
 from metagen import metagenerator
 
+PORTDIR = config(local_config=False)["PORTDIR"]
+HB = herdbase.make_herd_base(os.path.sep.join([PORTDIR, 'metadata', 'herds.xml']))
 
 def parse_echangelog_variable(name, email):
     """Extract developer name and email from ECHANGELOG_USER variable"""
@@ -64,6 +64,12 @@ def generate_xml(options):
         herds = options.herd.split(",")
     else:
         herds = ["no-herd"]
+
+    for herd in herds:
+        if not HB.known_herd(herd):
+            print red("!!! Error. Herd %s does not exist." % herd)
+            sys.exit(1) 
+            
     metadata.set_herd(herds)
 
     if options.echangelog:
