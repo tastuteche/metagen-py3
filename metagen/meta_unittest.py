@@ -6,13 +6,13 @@ from metagenerator import MyMetadata
 def test1():
     """1 herd specified"""
     metadata = MyMetadata()
-    metadata.set_herd(("python"))
+    metadata.set_herd(["python"])
     return metadata 
  
 def test2():
     """No herd specified, 1 maintainer"""
     metadata = MyMetadata()
-    metadata.set_herd([""])
+    metadata.set_herd()
     metadata.set_maintainer(["<pythonhead@gentoo.org>"], 
                             ["Rob Cakebread"], 
                             ["Maintainer description."]
