@@ -62,8 +62,6 @@ def generate_xml(options):
 
     if options.herd:
         herds = options.herd.split(",")
-    else:
-        herds = ["no-herd"]
 
     for herd in herds:
         if not HB.known_herd(herd):
@@ -96,7 +94,7 @@ def validate_xml(my_xml):
     """Test for valid XML"""
     #TODO validate against DTD
     #This just makes sure its valid XML of some sort.
-    #Probably not necessary since repoma validates against DTD?
+    #Probably not necessary since repoman validates against DTD?
     re_escape_quotes = re.compile('"')
     s = re_escape_quotes.sub('\\"', my_xml)
     cmd = "echo \"%s\" | xmllint --valid - 2>&1 > /dev/null" % s
@@ -106,8 +104,7 @@ def validate_xml(my_xml):
 if __name__ == '__main__':
     optParser = OptionParser(version=__version__)
     optParser.add_option("-H", action="store", dest="herd", type="string",
-                         help="Name of herd. If not specified, " +
-                         "'no-herd' will be inserted. " +
+                         help="Name of herd. If not specified, It will be empty. " +
                          "This requires either the -e or -m option.")
 
     optParser.add_option("-e", action="store", dest="email", type="string",
@@ -156,10 +153,6 @@ if __name__ == '__main__':
             print red("!!! Options -d and -n are only valid with -e or -m")
             sys.exit(1)
  
-    if options.herd == "no-herd" and not options.email and not options.echangelog:
-        print red("!!! You must specify a maintainer if you have no-herd.")
-        sys.exit(1)
-
     if not options.herd and not options.email and not options.echangelog:
         print red("!!! You must specify at least a herd (-H) " +
                   "or maintainer's email address (-e)\n")

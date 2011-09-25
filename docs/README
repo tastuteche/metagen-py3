@@ -47,13 +47,11 @@ metagen -H python
 
 metagen -m
 
- * This takes the maintainer info from your ECHANGELOG_USER variable
-   and assigns "no-herd" as the herd.
+ * This takes the maintainer info from your ECHANGELOG_USER variable.
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE pkgmetadata SYSTEMhttp://www.gentoo.org/dtd/metadata.dtd">
     <pkgmetadata>
-            <herd>no-herd</herd>
             <maintainer>
                     <email>pythonhead@gentoo.org</email>
                     <name>Rob Cakebread</name>
@@ -68,7 +66,6 @@ metagen -m -d "I maintain this because I'm crazy."
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE pkgmetadata SYSTEMhttp://www.gentoo.org/dtd/metadata.dtd">
     <pkgmetadata>
-            <herd>no-herd</herd>
             <maintainer>
                     <email>pythonhead@gentoo.org</email>
                     <name>Rob Cakebread</name>

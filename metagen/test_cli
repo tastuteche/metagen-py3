@@ -15,8 +15,8 @@ echo 'metagen -m -H python -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q'
 ./metagen.py -m -H python -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q
 
 #Should fail:
-echo 'metagen -H no-herd -Q'
-./metagen.py -H no-herd -Q
+echo 'metagen -Q'
+./metagen.py -Q
 
 #Should fail:
 echo 'metagen -l "Long desc" -Q'

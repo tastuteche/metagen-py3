@@ -1,4 +1,4 @@
-.\" Contact pythonhead@gentoo.org to correct errors or omissions. 
+.\" Contact neurogeek@gentoo.org to correct errors or omissions. 
 .TH man 1 "22 August 2004" "1.0" "metagen man page"
 .SH NAME
 .B metagen
@@ -8,7 +8,7 @@
 [options]
 .SH DESCRIPTION
 .B metagen 
-will create a valid metadata.xml file in the current directory. metadata.xml requires a herd tag (-H). If you only specify a package maintainer's email address (-e) "no-herd" will be inserted in the herd tag automatically.
+will create a valid metadata.xml file in the current directory.
 
 If you need multiple elements, such as two herds, use a comma to
 separate them. See EXAMPLES.
@@ -67,7 +67,7 @@ Creates metadata in current directory with two herds and long description
            -d 'The voices in my head told me to maintain this package' \
            -Q
 
-herd='no-herd', maintainer email, maintainer name, description of maintainership, to stdout only
+maintainer email, maintainer name, description of maintainership, to stdout only
 
 
 .B metagen -H net-p2p,python -e jo@gentoo.org,flo@gentoo.org \
@@ -89,6 +89,7 @@ No known bugs at this time.
 .SH AUTHOR
 .nf
 Rob 'pythonhead' Cakebread (pythonhead@gentoo.org)
+Jesus Rivero (neurogeek@gentoo.org)
 .fi
 .SH HISTORY
 2004 \- Initial revision
