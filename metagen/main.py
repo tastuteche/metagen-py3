@@ -58,6 +58,7 @@ def parse_echangelog_variable(name, email):
 def generate_xml(options):
     """Returns metadata.xml text"""
 
+    herds=[]
     metadata = metagenerator.MyMetadata()
 
     if options.herd:
