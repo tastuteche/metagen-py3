@@ -18,8 +18,15 @@ from optparse import OptionParser
 from commands import getstatusoutput
 
 from portage import config
-from repoman import herdbase
 from portage.output import red, blue
+
+try:
+    # portage <2.2.22
+    # https://bugs.gentoo.org/show_bug.cgi?id=561908
+    from repoman import herdbase
+except ImportError:
+    # portage >=2.2.22
+    from repoman.checks.herds import herdbase
 
 from metagen.version import __version__
 from metagen import metagenerator
