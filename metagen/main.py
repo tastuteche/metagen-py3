@@ -14,7 +14,7 @@ EXAMPLES - man metagen
 import re
 import os
 import sys
-from optparse import OptionParser
+from argparse import ArgumentParser
 from commands import getstatusoutput
 
 from portage import config
@@ -110,50 +110,48 @@ def validate_xml(my_xml):
 
 
 if __name__ == '__main__':
-    optParser = OptionParser(version=__version__)
-    optParser.add_option("-H", action="store", dest="herd", type="string",
+    parser = ArgumentParser(prog='metagen')
+    parser.add_argument('--version', action='version', version='%(prog)s ' + __version__)
+
+    parser.add_argument("-H", action="store", dest="herd",
                          help="Name of herd. If not specified, It will be empty. " +
                          "This requires either the -e or -m option.")
 
-    optParser.add_option("-e", action="store", dest="email", type="string",
+    parser.add_argument("-e", action="store", dest="email",
                          help="Maintainer's email address")
 
-    optParser.add_option("-n", action="store", dest="name", type="string",
+    parser.add_argument("-n", action="store", dest="name",
                          help="Maintainer's name")
 
-    optParser.add_option("-m", action="store_true", dest="echangelog", 
+    parser.add_argument("-m", action="store_true", dest="echangelog",
                          default=False,
                          help="Use name and email address from ECHANGELOG_USER "+
                          "environmental variable. "+
                          "This is a shortcut for -e <email> -n <name>")
 
-    optParser.add_option("-d", action="store", dest="desc", type="string",
+    parser.add_argument("-d", action="store", dest="desc",
                          help="Description of maintainership")
 
-    optParser.add_option("-l", action="store", dest="long", type="string",
+    parser.add_argument("-l", action="store", dest="long",
                          help="Long description of package.")
 
-    optParser.add_option("-o", action="store", dest="output", type="string",
+    parser.add_argument("-o", action="store", dest="output",
                          help="Specify location of output file.")
 
-    optParser.add_option("-f", action="store_true", dest="force", default=False,
+    parser.add_argument("-f", action="store_true", dest="force", default=False,
                          help="Force overwrite of existing metadata.")
 
-    optParser.add_option("-v", action="store_true", dest="verbose", default=True,
+    parser.add_argument("-v", action="store_true", dest="verbose", default=True,
                          help="Verbose. Output of file to stdout. (default)")
 
-    optParser.add_option("-q", action="store_false", dest="verbose",
+    parser.add_argument("-q", action="store_false", dest="verbose",
                          help="Squelch output of file to stdout.")
 
-    optParser.add_option("-Q", action="store_true", dest="no_write",
+    parser.add_argument("-Q", action="store_true", dest="no_write",
                          default=False,
                          help="Do not write file to disk.")
 
-    (options, remainingArgs) = optParser.parse_args()
-
-    if len(sys.argv) == 1:
-        optParser.print_help()
-        sys.exit(1)
+    options = parser.parse_args()
 
     if options.desc or options.name:
         if not options.email and not options.echangelog:
