@@ -15,7 +15,8 @@ def test2():
     metadata.set_herd()
     metadata.set_maintainer(["<pythonhead@gentoo.org>"], 
                             ["Rob Cakebread"], 
-                            ["Maintainer description."])
+                            ["Maintainer description."],
+                            ["person"])
     return metadata 
     
 def test3():
@@ -24,7 +25,8 @@ def test3():
     metadata.set_herd(["python"])
     metadata.set_maintainer(["<pythonhead@gentoo.org>"],
                             ["Rob Cakebread"],
-                            ["Maintainer description."])
+                            ["Maintainer description."],
+                            ["person"])
     return metadata 
 
 def test4():
@@ -33,7 +35,8 @@ def test4():
     metadata.set_herd(["python", "gnome"])
     metadata.set_maintainer(["pythonhead@gentoo.org"],
                             ["Rob Cakebread"],
-                            ["Maintainer description."])
+                            ["Maintainer description."],
+                            ["person"])
     return metadata 
 
 def test5():
@@ -42,7 +45,8 @@ def test5():
     metadata.set_herd(["python", "gnome"])
     metadata.set_maintainer(["goofy@gentoo.org", "pythonhead@gentoo.org"],
                             ["Goo Fi", "Rob Cakebread"],
-                            ["Maintainer one.", "Maintainer two"])
+                            ["Maintainer one.", "Maintainer two"],
+                            ["person", "person"])
     metadata.set_longdescription("This packages does X Y and Z.")
     return metadata 
 
