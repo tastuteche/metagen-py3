@@ -22,12 +22,18 @@ class MyMetadata(jaxml.XML_document):
         for my_herd in opt_herds:
             self.herd(my_herd)
 
-    def set_maintainer(self, emails, names, descs):
+    def set_maintainer(self, emails, names, descs, types):
         """Set maintainer(s)'s email, name, desc"""
+        if len(types) != len(emails):
+            if len(types) != 1:
+                print red("!!! Nbr maintainer types != nbr emails")
+                sys.exit(1)
+            types = [types[0] for _ in emails]
+
         i = 0
         for e in emails:
             self._push("maintainer_level")
-            self.maintainer().email(e)
+            self.maintainer(type=types[i]).email(e)
             if names:
                 if len(names) > len(emails):
                     print red("!!! Nbr names > nbr emails")

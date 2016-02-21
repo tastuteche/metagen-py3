@@ -34,6 +34,12 @@ from metagen import metagenerator
 PORTDIR = config(local_config=False)["PORTDIR"]
 HB = herdbase.make_herd_base(os.path.sep.join([PORTDIR, 'metadata', 'herds.xml']))
 
+# GLEP 67
+_MAINTAINER_TYPE_PERSON = 'person'
+_MAINTAINER_TYPE_PROJECT = 'project'
+_MAINTAINER_TYPE_UNKNOWN = 'unknown'
+_VALID_MAINTAINER_TYPES = (_MAINTAINER_TYPE_PERSON, _MAINTAINER_TYPE_PROJECT, _MAINTAINER_TYPE_UNKNOWN)
+
 def parse_echangelog_variable(name, email):
     """Extract developer name and email from ECHANGELOG_USER variable"""
     try:
@@ -88,9 +94,11 @@ def generate_xml(options):
             names = options.name.split(",")
         if options.desc:
             descs = options.desc.split(",")
+        maintainer_types = options.maintainer_type.split(",")
         metadata.set_maintainer(options.email.split(","),
                                 names,
-                                descs
+                                descs,
+                                maintainer_types,
                                 )
 
     if options.long:
@@ -107,6 +115,15 @@ def validate_xml(my_xml):
     s = re_escape_quotes.sub('\\"', my_xml)
     cmd = "echo \"%s\" | xmllint --valid - 2>&1 > /dev/null" % s
     return getstatusoutput(cmd)[0]
+
+
+def _check_maintainer_type_list(text):
+    for candidate in text.split(','):
+        if candidate not in _VALID_MAINTAINER_TYPES:
+            raise ValueError('"%s" not a valid maintainer type' % candidate)
+    return text
+
+_check_maintainer_type_list.__name__ = 'maintainer type'
 
 
 if __name__ == '__main__':
@@ -128,6 +145,9 @@ if __name__ == '__main__':
                          "This is a shortcut for -e <email> -n <name>")
     maintainer.add_argument("--desc", "-d", action="store",
                          help="Description of maintainership")
+    maintainer.add_argument("--type", "-t", dest='maintainer_type', type=_check_maintainer_type_list,
+                         help="Maintainer type as of GLEP 67; valid values are: %s" \
+                             % ', '.join('"%s"' % e for e in _VALID_MAINTAINER_TYPES))
 
     package = parser.add_argument_group(title='package arguments', description=None)
     package.add_argument("--long", "-l", action="store",
@@ -157,6 +177,12 @@ if __name__ == '__main__':
     if not options.herd and not options.email and not options.echangelog:
         print red("!!! You must specify at least a herd (-H) " +
                   "or maintainer's email address (-e)\n")
+        sys.exit(1)
+
+    if (options.email or options.echangelog) and not options.maintainer_type:
+        print red("!!! No maintainer type specified. Please pass one of the following, in addition:")
+        for candidate in _VALID_MAINTAINER_TYPES:
+            print red("!!!   --type %s" % candidate)
         sys.exit(1)
 
     txt = generate_xml(options)

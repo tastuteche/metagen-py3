@@ -18,26 +18,30 @@ set -x
 ########################################
 
 
-#Should fail if ECHANGELOG_USER not set:
-ECHANGELOG_USER='First Last <mail@example.org>' metagen -m -Q
+#Should fail as -t ... is missing
 ! metagen -m -Q
-
-metagen -e "someguy@gentoo.org" -d "Maint desc" -Q
-
-metagen -e "someguy@gentoo.org" -n "Jon Doe" -d "Maint desc" -Q
+! metagen -e mail@example.org -Q
 
 #Should fail if ECHANGELOG_USER not set:
-ECHANGELOG_USER='First Last <mail@example.org>' metagen -m -H python -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q
-! metagen -m -H python -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q
+ECHANGELOG_USER='First Last <mail@example.org>' metagen -m -Q -t person
+! metagen -m -Q -t person
+
+metagen -e "someguy@gentoo.org" -d "Maint desc" -Q -t person
+
+metagen -e "someguy@gentoo.org" -n "Jon Doe" -d "Maint desc" -Q -t person
+
+#Should fail if ECHANGELOG_USER not set:
+ECHANGELOG_USER='First Last <mail@example.org>' metagen -m -H python -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q -t person
+! metagen -m -H python -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q -t person
 
 #Should fail:
-! metagen -Q
+! metagen -Q -t person
 
 #Should fail:
-! metagen -l "Long desc" -Q
+! metagen -l "Long desc" -Q -t person
 
 #Should fail:
-! metagen -d "Maintainer desc" -Q
+! metagen -d "Maintainer desc" -Q -t person
 
 
 ########################################
