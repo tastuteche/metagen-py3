@@ -145,7 +145,8 @@ if __name__ == '__main__':
                          "This is a shortcut for -e <email> -n <name>")
     maintainer.add_argument("--desc", "-d", action="store",
                          help="Description of maintainership")
-    maintainer.add_argument("--type", "-t", dest='maintainer_type', type=_check_maintainer_type_list,
+    maintainer.add_argument("--type", "-t", dest='maintainer_type', metavar='TYPE',
+                         type=_check_maintainer_type_list,
                          help="Maintainer type as of GLEP 67; valid values are: %s" \
                              % ', '.join('"%s"' % e for e in _VALID_MAINTAINER_TYPES))
 
