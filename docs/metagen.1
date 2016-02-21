@@ -15,40 +15,82 @@ separate them. See EXAMPLES.
 
 .SH OPTIONS
 .\" metagen [OPTIONS]
-  -H  herd
-      Name of herd.
+.B --herd
+|
+.B
+-H
+herd
+    Name of herd.
 
-  -e  email-address
-      Package maintainer's email address
+.B --email
+|
+.B
+-e
+email-address
+    Package maintainer's email address
 
-  -n  maintainer-name
-      Package maintainer's name (used with -e option)
+.B --name
+|
+.B
+-n
+maintainer-name
+    Package maintainer's name (used with -e option)
 
-  -m 
-      Uses ECHANGELOG_USER variable. Can be used instead of -e and -n
+.B --echangelog
+|
+.B
+-m
+    Uses ECHANGELOG_USER variable. Can be used instead of -e and -n
 
-  -d  description
-      Description of maintainership (used with -e option)
+.B --desc
+|
+.B
+-d
+description
+    Description of maintainership (used with -e option)
 
-  -l  long-description
-      Long description of package.
+.B --long
+|
+.B
+-l
+long-description
+    Long description of package.
 
-  -o  output-file
-      Write to <output-file> instead of ./metadata.xml
+.B --output
+|
+.B
+-o
+output-file
+    Write to <output-file> instead of ./metadata.xml
 
-  -f
-      Force overwrite of existing metadata
+.B --force
+|
+.B
+-f
+    Force overwrite of existing metadata
 
-  -v 
-      Write to stdout as well as disk (default)
+.B --verbose
+|
+.B
+-v
+    Write to stdout as well as disk (default)
 
-  -q
-      Don't write to stdout
+.B --quiet
+|
+.B
+-q
+    Don't write to stdout
 
-  -Q
-      Don't write file to disk 
+.B -Q
+    Don't write file to disk
 
-  -h, --help  show this help message and exit
+.B --help
+|
+.B -h
+    show usage help and exit
+
+.B --version
+    show version and exit
 
 .SH EXAMPLES
 .B metagen -H python
