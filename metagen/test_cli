@@ -1,28 +1,43 @@
 #!/bin/bash
+handle_error() {
+    ret=$?
+    echo FAILED. >&2
+    exit ${ret}
+}
+trap handle_error ERR
+
+unset ECHANGELOG_USER
+PS4='# '
+set -x
+########################################
+# BEGIN tests
+########################################
+
 
 #Should fail if ECHANGELOG_USER not set:
-echo 'metagen -m -Q'
-metagen -m -Q
+ECHANGELOG_USER='First Last <mail@example.org>' metagen -m -Q
+! metagen -m -Q
 
-echo 'metagen -e "someguy@gentoo.org" -d "Maint desc" -Q'
 metagen -e "someguy@gentoo.org" -d "Maint desc" -Q
 
-echo 'metagen -e "someguy@gentoo.org" -n "Jon Doe" -d "Maint desc" -Q'
 metagen -e "someguy@gentoo.org" -n "Jon Doe" -d "Maint desc" -Q
 
 #Should fail if ECHANGELOG_USER not set:
-echo 'metagen -m -H python -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q'
-metagen -m -H python -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q
+ECHANGELOG_USER='First Last <mail@example.org>' metagen -m -H python -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q
+! metagen -m -H python -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q
 
 #Should fail:
-echo 'metagen -Q'
-metagen -Q
+! metagen -Q
 
 #Should fail:
-echo 'metagen -l "Long desc" -Q'
-metagen -l "Long desc" -Q
+! metagen -l "Long desc" -Q
 
 #Should fail:
-echo 'metagen -d "Maintainer desc" -Q'
-metagen -d "Maintainer desc" -Q
+! metagen -d "Maintainer desc" -Q
 
+
+########################################
+# END tests
+########################################
+echo
+echo PASSED.
