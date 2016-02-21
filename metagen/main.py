@@ -113,41 +113,36 @@ if __name__ == '__main__':
     parser = ArgumentParser(prog='metagen')
     parser.add_argument('--version', action='version', version='%(prog)s ' + __version__)
 
-    parser.add_argument("-H", action="store", dest="herd",
+    maintainer = parser.add_argument_group(title='maintainer arguments')
+    maintainer.add_argument("-H", action="store", dest="herd",
                          help="Name of herd. If not specified, It will be empty. " +
                          "This requires either the -e or -m option.")
-
-    parser.add_argument("-e", action="store", dest="email",
+    maintainer.add_argument("-e", action="store", dest="email",
                          help="Maintainer's email address")
-
-    parser.add_argument("-n", action="store", dest="name",
+    maintainer.add_argument("-n", action="store", dest="name",
                          help="Maintainer's name")
-
-    parser.add_argument("-m", action="store_true", dest="echangelog",
+    maintainer.add_argument("-m", action="store_true", dest="echangelog",
                          default=False,
                          help="Use name and email address from ECHANGELOG_USER "+
                          "environmental variable. "+
                          "This is a shortcut for -e <email> -n <name>")
-
-    parser.add_argument("-d", action="store", dest="desc",
+    maintainer.add_argument("-d", action="store", dest="desc",
                          help="Description of maintainership")
 
-    parser.add_argument("-l", action="store", dest="long",
+    package = parser.add_argument_group(title='package arguments')
+    package.add_argument("-l", action="store", dest="long",
                          help="Long description of package.")
 
-    parser.add_argument("-o", action="store", dest="output",
+    operation = parser.add_argument_group(title='operation arguments')
+    operation.add_argument("-o", action="store", dest="output",
                          help="Specify location of output file.")
-
-    parser.add_argument("-f", action="store_true", dest="force", default=False,
+    operation.add_argument("-f", action="store_true", dest="force", default=False,
                          help="Force overwrite of existing metadata.")
-
-    parser.add_argument("-v", action="store_true", dest="verbose", default=True,
+    operation.add_argument("-v", action="store_true", dest="verbose", default=True,
                          help="Verbose. Output of file to stdout. (default)")
-
-    parser.add_argument("-q", action="store_false", dest="verbose",
+    operation.add_argument("-q", action="store_false", dest="verbose",
                          help="Squelch output of file to stdout.")
-
-    parser.add_argument("-Q", action="store_true", dest="no_write",
+    operation.add_argument("-Q", action="store_true", dest="no_write",
                          default=False,
                          help="Do not write file to disk.")
 
