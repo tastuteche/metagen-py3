@@ -14,11 +14,14 @@ EXAMPLES - man metagen
 import re
 import os
 import sys
+import tempfile
 from argparse import ArgumentParser
 from commands import getstatusoutput
+from textwrap import dedent
 
 from portage import config
-from portage.output import red, blue
+from portage.exception import FileNotFound
+from portage.output import red, blue, yellow
 
 try:
     # portage <2.2.22
@@ -32,7 +35,6 @@ from metagen.version import __version__
 from metagen import metagenerator
 
 PORTDIR = config(local_config=False)["PORTDIR"]
-HB = herdbase.make_herd_base(os.path.sep.join([PORTDIR, 'metadata', 'herds.xml']))
 
 # GLEP 67
 _MAINTAINER_TYPE_PERSON = 'person'
@@ -68,6 +70,20 @@ def parse_echangelog_variable(name, email):
         name = my_name
     return name, email
 
+def check_herds(herds):
+    herds_xml_path = os.path.sep.join([PORTDIR, 'metadata', 'herds.xml'])
+    try:
+        HB = herdbase.make_herd_base(herds_xml_path)
+    except FileNotFound as e:  # bug 577148
+        print yellow('!!! Warning. Herd names could not be checked '
+                'against the list of known herds as '
+                'file "%s" was not found.' % e.value)
+    else:
+        for herd in herds:
+            if not HB.known_herd(herd):
+                print red("!!! Error. Herd %s does not exist." % herd)
+                sys.exit(1)
+
 def generate_xml(options):
     """Returns metadata.xml text"""
 
@@ -76,12 +92,8 @@ def generate_xml(options):
 
     if options.herd:
         herds = options.herd.split(",")
+        check_herds(herds)
 
-    for herd in herds:
-        if not HB.known_herd(herd):
-            print red("!!! Error. Herd %s does not exist." % herd)
-            sys.exit(1) 
-            
     metadata.set_herd(herds)
 
     if options.echangelog:
