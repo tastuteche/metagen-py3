@@ -17,11 +17,6 @@ class MyMetadata(jaxml.XML_document):
                    '"http://www.gentoo.org/dtd/metadata.dtd">')
         self.pkgmetadata()
 
-    def set_herd(self, opt_herds=[]):
-        """Set herd(s)"""
-        for my_herd in opt_herds:
-            self.herd(my_herd)
-
     def set_maintainer(self, emails, names, descs, types):
         """Set maintainer(s)'s email, name, desc"""
         if len(types) != len(emails):

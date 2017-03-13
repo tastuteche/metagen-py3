@@ -23,14 +23,6 @@ from portage import config
 from portage.exception import FileNotFound
 from portage.output import red, blue, yellow
 
-try:
-    # portage <2.2.22
-    # https://bugs.gentoo.org/show_bug.cgi?id=561908
-    from repoman import herdbase
-except ImportError:
-    # portage >=2.2.22
-    from repoman.checks.herds import herdbase
-
 from metagen.version import __version__
 from metagen import metagenerator
 
@@ -70,31 +62,10 @@ def parse_echangelog_variable(name, email):
         name = my_name
     return name, email
 
-def check_herds(herds):
-    herds_xml_path = os.path.sep.join([PORTDIR, 'metadata', 'herds.xml'])
-    try:
-        HB = herdbase.make_herd_base(herds_xml_path)
-    except FileNotFound as e:  # bug 577148
-        print yellow('!!! Warning. Herd names could not be checked '
-                'against the list of known herds as '
-                'file "%s" was not found.' % e.value)
-    else:
-        for herd in herds:
-            if not HB.known_herd(herd):
-                print red("!!! Error. Herd %s does not exist." % herd)
-                sys.exit(1)
-
 def generate_xml(options):
     """Returns metadata.xml text"""
 
-    herds=[]
     metadata = metagenerator.MyMetadata()
-
-    if options.herd:
-        herds = options.herd.split(",")
-        check_herds(herds)
-
-    metadata.set_herd(herds)
 
     if options.echangelog:
         (options.name, options.email) = \
@@ -143,9 +114,6 @@ if __name__ == '__main__':
     parser.add_argument('--version', action='version', version='%(prog)s ' + __version__)
 
     maintainer = parser.add_argument_group(title='maintainer arguments')
-    maintainer.add_argument("--herd", "-H", action="store",
-                         help="Name of herd. If not specified, It will be empty. " +
-                         "This requires either the -e or -m option.")
     maintainer.add_argument("--email", "-e", action="store",
                          help="Maintainer's email address")
     maintainer.add_argument("--name", "-n", action="store",
@@ -187,8 +155,8 @@ if __name__ == '__main__':
             print red("!!! Options -d and -n are only valid with -e or -m")
             sys.exit(1)
  
-    if not options.herd and not options.email and not options.echangelog:
-        print red("!!! You must specify at least a herd (-H) " +
+    if not options.email and not options.echangelog:
+        print red("!!! You must specify --echangelog|-m " +
                   "or maintainer's email address (-e)\n")
         sys.exit(1)
 

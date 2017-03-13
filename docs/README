@@ -12,11 +12,6 @@ from Python to create metadata.xml files easily:
     from metagen.metagenerator import MyMetadata
 
     metadata = MyMetadata()
-    metadata.set_herd(["python"])
-    print metadata 
-
-    metadata = MyMetadata()
-    metadata.set_herd(["gnome", "python"])
     metadata.set_maintainer(["<pythonhead@gentoo.org>"], 
                             ["Rob Cakebread"], 
                             ["Maintainer description."]
@@ -34,16 +29,6 @@ from Python to create metadata.xml files easily:
 
 
 Command line tool examples:
-
-metagen -H python
-
- * One herd
-
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE pkgmetadata SYSTEMhttp://www.gentoo.org/dtd/metadata.dtd">
-    <pkgmetadata>
-            <herd>python</herd>
-    </pkgmetadata>
 
 metagen -m
 
@@ -74,14 +59,13 @@ metagen -m -d "I maintain this because I'm crazy."
     </pkgmetadata>
 
 
-metagen -m -H python -l "This package does X, Y, and Z."
+metagen -m -l "This package does X, Y, and Z."
 
- * Maintainer, herd, long description
+ * Maintainer, long description
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE pkgmetadata SYSTEMhttp://www.gentoo.org/dtd/metadata.dtd">
     <pkgmetadata>
-            <herd>python</herd>
             <maintainer>
                     <email>pythonhead@gentoo.org</email>
                     <name>Rob Cakebread</name>
@@ -89,15 +73,13 @@ metagen -m -H python -l "This package does X, Y, and Z."
             <longdescription>This package does X, Y, and Z.</longdescription>
     </pkgmetadata>
 
-metagen -m -e "jdoe@gentoo.org","tsmith@gentoo.org" -n "Jane Doe","Tom Smith" -H python,gnome -l "This package does X, Y, and Z."
+metagen -m -e "jdoe@gentoo.org","tsmith@gentoo.org" -n "Jane Doe","Tom Smith" -l "This package does X, Y, and Z."
 
- * Two herds, 3 maintainers, long description
+ * 3 maintainers, long description
 
     <?xml version="1.0" encoding="UTF-8"?>
     <!DOCTYPE pkgmetadata SYSTEMhttp://www.gentoo.org/dtd/metadata.dtd">
     <pkgmetadata>
-            <herd>python</herd>
-            <herd>gnome</herd>
             <maintainer>
                     <email>pythonhead@gentoo.org</email>
                     <name>Rob Cakebread</name>

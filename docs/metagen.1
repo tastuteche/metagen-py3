@@ -10,18 +10,11 @@
 .B metagen 
 will create a valid metadata.xml file in the current directory.
 
-If you need multiple elements, such as two herds, use a comma to
+If you need multiple elements, such as two email addresses, use a comma to
 separate them. See EXAMPLES.
 
 .SH OPTIONS
 .\" metagen [OPTIONS]
-.B --herd
-|
-.B
--H
-herd
-    Name of herd.
-
 .B --email
 |
 .B
@@ -101,17 +94,6 @@ output-file
     show version and exit
 
 .SH EXAMPLES
-.B metagen -H python
-
-Creates metadata.xml in current directory with python as the herd
-
-
-.B metagen -H python,wxwidgets \
-           -l 'This package does a little of this and some o dat.'
-
-Creates metadata in current directory with two herds and long description
-
-
 .B metagen -e pythonhead@gentoo.org \
            -n 'Joe Blow' \
            -d 'The voices in my head told me to maintain this package' \
@@ -120,13 +102,13 @@ Creates metadata in current directory with two herds and long description
 maintainer email, maintainer name, description of maintainership, to stdout only
 
 
-.B metagen -H net-p2p,python -e jo@gentoo.org,flo@gentoo.org \
+.B metagen -e jo@gentoo.org,flo@gentoo.org \
            -n 'Jo Blo','Flo Blo' \
            -d 'I am maintaining this because foo','I am maintaining this because bar' \
            -l 'This package is yadda yadda yadda, spam and eggs' \
            -Q
 
-2 herds, 2 maintainers with names and maintainer descriptions for each maintainer,
+2 maintainers with names and maintainer descriptions for each maintainer,
 only write to stdout
 
 

@@ -31,8 +31,8 @@ metagen -e "someguy@gentoo.org" -d "Maint desc" -Q -t person
 metagen -e "someguy@gentoo.org" -n "Jon Doe" -d "Maint desc" -Q -t person
 
 #Should fail if ECHANGELOG_USER not set:
-ECHANGELOG_USER='First Last <mail@example.org>' metagen -m -H python -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q -t person
-! metagen -m -H python -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q -t person
+ECHANGELOG_USER='First Last <mail@example.org>' metagen -m -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q -t person
+! metagen -m -e "foo@bar.com" -d "Foo bar.","Chow fun" -Q -t person
 
 #Should fail:
 ! metagen -Q -t person
