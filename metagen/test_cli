@@ -1,6 +1,6 @@
 #!/bin/bash
 metagen() {
-    PYTHONPATH=. ./metagen/main.py "$@"
+    PYTHONPATH=. ../metagen/main.py "$@"
 }
 
 handle_error() {

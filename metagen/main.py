@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 """
 
@@ -10,13 +10,16 @@ USE      - metagen --help
 EXAMPLES - man metagen
 
 """
+from __future__ import print_function
 
+from future import standard_library
+standard_library.install_aliases()
 import re
 import os
 import sys
 import tempfile
 from argparse import ArgumentParser
-from commands import getstatusoutput
+from subprocess import getstatusoutput
 from textwrap import dedent
 
 from portage import config
@@ -39,18 +42,18 @@ def parse_echangelog_variable(name, email):
     try:
         e = os.environ["ECHANGELOG_USER"]
     except KeyError:
-        print red("!!! Environmental variable ECHANGELOG_USER not set.")
-        print red("!!! Set ECHANGELOG_USER or use -e and -n")
+        print(red("!!! Environmental variable ECHANGELOG_USER not set."))
+        print(red("!!! Set ECHANGELOG_USER or use -e and -n"))
         sys.exit(1) 
     try:
         my_email = e[e.find("<") +1:e.find(">")]
     except:
-        print red("!!! ECHANGELOG_USER not set properly")
+        print(red("!!! ECHANGELOG_USER not set properly"))
         sys.exit(1) 
     try:
         my_name = e[0:e.find("<")-1]
     except:
-        print red("!!! ECHANGELOG_USER not set properly")
+        print(red("!!! ECHANGELOG_USER not set properly"))
         sys.exit(1) 
     if email:
         email = "%s,%s" % (my_email, email)
@@ -151,43 +154,43 @@ if __name__ == '__main__':
 
     if options.desc or options.name:
         if not options.email and not options.echangelog:
-            print red("!!! No maintainer's email address specified.")
-            print red("!!! Options -d and -n are only valid with -e or -m")
+            print(red("!!! No maintainer's email address specified."))
+            print(red("!!! Options -d and -n are only valid with -e or -m"))
             sys.exit(1)
  
     if not options.email and not options.echangelog:
-        print red("!!! You must specify --echangelog|-m " +
-                  "or maintainer's email address (-e)\n")
+        print(red("!!! You must specify --echangelog|-m " +
+                  "or maintainer's email address (-e)\n"))
         sys.exit(1)
 
     if (options.email or options.echangelog) and not options.maintainer_type:
-        print red("!!! No maintainer type specified. Please pass one of the following, in addition:")
+        print(red("!!! No maintainer type specified. Please pass one of the following, in addition:"))
         for candidate in _VALID_MAINTAINER_TYPES:
-            print red("!!!   --type %s" % candidate)
+            print(red("!!!   --type %s" % candidate))
         sys.exit(1)
 
     txt = generate_xml(options)
 
     error_status = validate_xml(txt)
     if error_status < 0:
-        print red("!!! Error - Invalid XML")
-        print red("!!! Please report this bug with the options you used and the output:")
-        print error_status
-        print txt
+        print(red("!!! Error - Invalid XML"))
+        print(red("!!! Please report this bug with the options you used and the output:"))
+        print(error_status)
+        print(txt)
         sys.exit(1)
 
     if options.verbose:
-        print "\n%s" % txt
+        print("\n%s" % txt)
 
     out_file = "./metadata.xml"
     if options.output:
         out_file = options.output
     if not options.no_write and os.path.exists(out_file):
         if not options.force:
-            print red("!!! File %s exists." % out_file)
-            print red("!!! Use -f to force overwrite.")
+            print(red("!!! File %s exists." % out_file))
+            print(red("!!! Use -f to force overwrite."))
             sys.exit(1)
     if not options.no_write:
         open("%s" % out_file, "w").writelines(txt)
-        print blue("%s written") % out_file
+        print(blue("%s written") % out_file)
 

@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
-from metagenerator import MyMetadata
+from __future__ import absolute_import
+from .metagenerator import MyMetadata
 
 
 def test1():

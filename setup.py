@@ -28,8 +28,11 @@ EXAMPLES:
     python setup.py install
     python setup.py sdist
 """
+from __future__ import print_function
 
-import os,sys,re,string,getopt,shutil,commands,glob
+from future import standard_library
+standard_library.install_aliases()
+import os,sys,re,string,getopt,shutil,subprocess,glob
 from distutils.core import setup,Extension
 from metagen.version import __version__
 
@@ -58,10 +61,10 @@ def debug(ftn,txt):
 
 def fatal(ftn,txt):
     msg="%s.%s:FATAL:%s\n" % (modname,ftn,txt)
-    raise SystemExit, msg
+    raise SystemExit(msg)
     
 def usage():
-    print __doc__
+    print(__doc__)
 
 #=============================
 def main():
@@ -87,7 +90,7 @@ if __name__ == '__main__':
             usage()
             sys.exit(0)
         elif opt[0]=='-v' or opt[0]=='--version':
-            print modname+": version="+version
+            print(modname+": version="+version)
         elif opt[0]=='--exec-prefix':
             exec_prefix=opt[1]
 

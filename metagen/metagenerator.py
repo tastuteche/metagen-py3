@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+from __future__ import print_function
+from __future__ import absolute_import
 import sys
 
 import jaxml
@@ -21,7 +23,7 @@ class MyMetadata(jaxml.XML_document):
         """Set maintainer(s)'s email, name, desc"""
         if len(types) != len(emails):
             if len(types) != 1:
-                print red("!!! Nbr maintainer types != nbr emails")
+                print(red("!!! Nbr maintainer types != nbr emails"))
                 sys.exit(1)
             types = [types[0] for _ in emails]
 
@@ -31,13 +33,13 @@ class MyMetadata(jaxml.XML_document):
             self.maintainer(type=types[i]).email(e)
             if names:
                 if len(names) > len(emails):
-                    print red("!!! Nbr names > nbr emails")
+                    print(red("!!! Nbr names > nbr emails"))
                     sys.exit(1)
                 if i <= len(names) -1:
                     self.name(names[i])
             if descs:
                 if len(descs) > len(emails):
-                    print red("!!! Nbr descs > nbr emails")
+                    print(red("!!! Nbr descs > nbr emails"))
                     sys.exit(1)
                 if i <= len(descs) -1:
                     self.description(descs[i])
@@ -49,19 +51,19 @@ class MyMetadata(jaxml.XML_document):
         self.longdescription(longdesc)
 
 def do_tests():
-    import meta_unittest
+    from . import meta_unittest
     fails = 0
     for func in dir(meta_unittest):
         if func[0:4] == "test":
             try:
-                exec "print meta_unittest.%s.__name__ + ':'," % func
-                exec "print meta_unittest.%s.__doc__" % func
-                exec "print meta_unittest.%s()" % func
+                exec("print meta_unittest.%s.__name__ + ':'," % func)
+                exec("print meta_unittest.%s.__doc__" % func)
+                exec("print meta_unittest.%s()" % func)
             except:
                 fails += 1
-                print "Test %s failed:" % func
-                print sys.exc_type, sys.exc_value
-    print "%s tests failed." % fails
+                print("Test %s failed:" % func)
+                print(sys.exc_info()[0], sys.exc_info()[1])
+    print("%s tests failed." % fails)
 
 if __name__ == "__main__":
     do_tests()
